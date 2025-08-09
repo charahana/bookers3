@@ -1,8 +1,29 @@
-<h2>プロフィール編集</h2>
-<%= form_with model: @user do |f| %>
-  <label for="inputName">Name</label>
-  <%= f.text_field :name, autofocus: true, id:"inputName", placeholder:"名前"%>
-  <label for="inputImage">ProfileImage</label>
-  <%= f.file_field :profile_image, placeholder: "プロフィール画像", accept: "image/*" %>  
-  <%= f.submit "変更を保存" %>
-<% end %>
+<div class="d-flex justify-content-center align-items-center">
+  <div style="padding: 20px;  margin-bottom: 60px;">
+    <h2>User info</h2>
+    <%= form_with model: @user, local: true, html: { style: "width: 475px; height: 312px;" } do |f| %>
+      <% if @user.errors.any? %>
+        <div id="error_explanation" class="alert alert-danger">
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    <div class="mb-3">
+      <%= f.label :name, "Name", class: "form-label" %>
+      <%= f.text_field :name, autofocus: true, class: "form-control", id: "inputName", placeholder: "名前", style: "width: 475px;" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :profile_image, "Image", class: "form-label" %>
+      <%= f.file_field :profile_image, accept: "image/*", class: "form-control border-0", id: "inputImage" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :introduction, "Introduction", class: "form-label" %>
+      <%= f.text_area :introduction, class: "form-control", style: "height: 62px; width: 475px;" %>
+    </div>
+    <%= f.submit "Update User", class: "btn", style: "background-color: #6C757D; color: #fff; border: none;" %>
+    <% end %>
+  </div>
+</div>

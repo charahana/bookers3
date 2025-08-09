@@ -1,11 +1,68 @@
-<div>
-  <%= image_tag @book.get_image %>
-  <p>ショップ名：<%= @book.shop_name %></p>
-  <p>説明：<%= @book.caption %></p>
-  <p>投稿ユーザー画像：<%= image_tag @book.user.get_profile_image(100,100) %></p>
-  <p>ユーザーネーム：<%= @book.user.name %></p>
-  <p>投稿日：<%= @book.created_at.strftime('%Y/%m/%d') %></p>
-  <% if @book.user == current_user %>
-    <%= link_to "削除", book_path(@book), method: :delete %>
-  <% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <aside>
+        <h2>User info</h2>
+        <p><%= image_tag @user.get_profile_image(100,100) %></p>
+        <table class="table">
+          <tr>
+            <th>name</th>
+            <td><%= @user.name %></td>
+          </tr>
+          <tr>
+            <th>introduction</th>
+            <td><%= @user.introduction %></td>
+          </tr>
+        </table>
+        <div class="text-center mt-3">
+          <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary", style: "width: 100%;" do %>
+            <i class="fas fa-user-cog"></i>
+          <% end %>
+        </div>
+        <h2>New book</h2>
+        <%= form_with(model: @book_new, url: books_path, local: true) do |f| %>
+          <div class="form-group">
+            <%= f.label :title, "Title" %>
+            <%= f.text_field :title, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :body, "Opinion" %>
+            <%= f.text_area :body, class: 'form-control' %>
+          </div>
+          <%= f.submit "Create Book", class: "btn btn-success mt-2" %>
+        <% end %> 
+      </aside>
+    </div>
+    <div class="col-md-8 offset-md-1">
+      <h2>Book detail</h2>
+      <table class="table">
+        <tbody>
+          <% @books.each do |book| %>
+            <tr>
+              <td style="padding: 12px;">
+                <% if book.image.attached? %>
+                  <%= image_tag book.get_image.variant(resize: "80x80"), class: "img-thumbnail" %>
+                <% end %>
+                <div style="margin-top: 8px;">
+                  <%= link_to book.user.name, user_path(book.user) %>
+                </div>
+              </td>
+              <td class="card-text" style="padding: 12px;"><%= link_to book.title, book_path(book) %></td>
+              <td class="card-text" style="padding: 12px;"><%= book.body %></td>
+              <% if book.user == current_user %>
+                <td class="text-end" style="padding: 12px;">
+                  <%= link_to 'Edit', edit_book_path(book), class: 'btn btn-primary btn-sm', style: "width: 41px; height: 30px; background-color: #28A745;" %>
+                </td>
+                <td class="text-end" style="padding: 12px;">
+                  <%= link_to 'Destroy', book_path(book), method: :delete, data: { confirm: '本当に消しますか？' }, class: 'btn btn-danger btn-sm', style: "width: 65px; height: 30px;" %>
+                </td>
+              <% else %>
+                <td colspan="2" style="padding: 12px;"></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

@@ -6,6 +6,9 @@ class User < ApplicationRecord
 
   has_many :books, dependent: :destroy
 
+  validates :name, uniqueness: true, length: {in: 2..20}
+  validates :introduction, length: {maximum: 50}
+
   attr_writer :login
 
   def login
@@ -13,18 +16,17 @@ class User < ApplicationRecord
   end
 
   def self.find_for_database_authentication(warden_conditions)
-    login = warden_conditions[:login].downcase
-    where("lower(name) = :value OR lower(email) = :value", { value: login }).first
+    where(name: warden_conditions[:name]).first
   end
 
   has_one_attached :profile_image
 
   
   def get_profile_image(width, height)
-    unless profile_image.attached?
-      file_path = Rails.root.join('app/assets/images/sample-author1.jpg')
-      profile_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
+    if profile_image.attached?
+      profile_image.variant(resize_to_limit: [width, height]).processed
+    else
+      ActionController::Base.helpers.asset_path('no_image.jpg')
     end
-    profile_image.variant(resize_to_limit: [width, height]).processed
   end
 end

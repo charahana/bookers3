@@ -1,0 +1,16 @@
+<h2>Editing Book</h2>
+<%= form_with(model: @book, local: true) do |f| %>
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :body %>
+    <%= f.text_area :body, class: "form-control" %>
+  </div>
+
+  <%= f.submit "Update Book", class: "btn btn-primary mt-2" %>
+<% end %>
+<%= link_to "Show", book_path(@book) %>
+<%= link_to "Back", books_path %>

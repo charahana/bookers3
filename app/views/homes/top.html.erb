@@ -1,5 +1,15 @@
-<h1>welcome to Bookers !!</h1>
-<p>In Bookers,</p>
-<p>you can share and exchange your opinions , inpressions , and emotions</p>
-<p>about various books!</p>
-<p>CopyRight Infratop.inc</p>
+
+  <div style = "max-width: 700px; width: 540px; margin: 0 auto; text-align: left;">
+    <h1>welcome to <i class="fas fa-book"></i><strong>Bookers</strong> !!</h1>
+    <p>In <i class="fas fa-book"></i><strong>Bookers</strong>,</p>
+    <p>you can share and exchange your opinions , inpressions , and emotions</p>
+    <p>about various books!</p>
+    <ul style= "list-style: none; padding-left: 0; text-align: center;">
+      <li style= "margin-bottom: 15px;">
+        <%= link_to "Log in", new_user_session_path, class: "btn", style: "background-color: #17A2B8; color: #fff; width: 450px; height: 30px; display: flex; align-items: center; justify-content: center; text-align: center; text-decoration: none; margin: 0 auto;" %>
+      </li>
+      <li>
+        <%= link_to "Sign up", new_user_registration_path, class: "btn", style: "background-color: #28A745; color: #fff; width: 450px; height: 30px; display: flex; align-items: center; justify-content: center; text-align: center; text-decoration: none; margin: 0 auto;" %>
+      </li>
+    </ul>
+  </div>

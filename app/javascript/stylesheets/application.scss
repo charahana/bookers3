@@ -1,1 +1,12 @@
 @use '~bootstrap/scss/bootstrap';
+
+.navbar {
+    height: 56px;
+    background-color: #343A40;
+  }
+  
+  .navbar .nav-link,
+  .navbar .navbar-brand {
+    color: #fff;
+  }
+  
